@@ -1,7 +1,7 @@
 # GenieLog
 Parseur d’articles scientifiques en format texte
 
-# Le programme relatif à cette version comporte les fonctionnalités suivantes :
+Le programme relatif à cette version comporte les fonctionnalités suivantes :
     - Créer un nouveau dossier
     - Pour chaque fichier pdf contenu dans le dossier ciblé :
       - Convertir le fichier pdf à l'aide pdf2text
