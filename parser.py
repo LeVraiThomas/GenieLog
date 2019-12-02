@@ -1,4 +1,8 @@
 import os
+import glob
+import os.path
+
+from os.path import basename, splitext
 
 def parser(src, dst):
 	for line in src: 
@@ -30,6 +34,17 @@ def getTitle(file_to_parse) :
 	
 	return(first_lines)
 
+def getName():
+	ListeDeFichierPdf=[] 
+	l = glob.glob('Papers/*.pdf')
+	for i in l: 
+		a=i.strip("Papers/")
+		ListeDeFichierPdf.append(a)
+	fichier = open("fichier1.txt", "w")
+	fichier.write(ListeDeFichierPdf[0])
+	fichier.close()
+	return(ListeDeFichierPdf)
+
 def main():
 	src = "Alexandrov"
 	fichier = "Papers/" + src + ".pdf"
@@ -47,8 +62,12 @@ def main():
 		destination.close()
 		source.close()
 		
-		
-
-
 main()
+
+
+
+
+
+
+
 
