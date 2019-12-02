@@ -1,13 +1,40 @@
 import os
 import glob
 import os.path
-
+import re
 from os.path import basename, splitext
+	
+def parser():
+	#Creating directory to put .txt files
+	os.system('rm -r ParsedPapers')
+	os.system('mkdir ParsedPapers')
+	ListeDeFichierPdf=getName()
+	for x in ListeDeFichierPdf:
+		file_to_open = x
+		file_to_open = file_to_open.replace(' ', '\ ')
+		file_to_read = 'ParsedPapers/' + file_to_open.strip('.pdf') + '.txt'
+		temp = file_to_read
+		command = 'pdf2txt ' + file_to_open + ' > ' + file_to_read
+		os.system(command)
+		f = open(temp, 'r+')
+		#Name
+		parsed_file = "Parsed" + i + ".txt"
+		fichier = open(parsed_file, 'w+')
+		fichier.write(ListeDeFichierPdf[i])
+		#Title
+		first_lines = f.readline()
+		
+		fichier.write(first_lines) 
+		#Abstract
+		content = f.read()
+		debutAbstract = (content.find("Abstract"))
+		finAbstract = (content.find("\n\n", debutAbstract))
+		substring = content[debutAbstract:finAbstract]
+		fichier.write(substring) 
+		fichier.close()
+	
 
-def parser(src, dst):
-	for line in src: 
-		print(line)
-
+	
 def getTitle(file_to_parse) :
 	title = ""
 	
@@ -34,34 +61,27 @@ def getTitle(file_to_parse) :
 	
 	return(first_lines)
 
+def getAbstract():
+	f = open('Papers/Papers/Alexandrov.txt', "r+")
+	content = f.read()
+	debutAbstract = (content.find("Abstract"))
+	print(debutAbstract)
+	finAbstract = (content.find("\n\n", debutAbstract))
+	print(finAbstract)
+	substring = content[debutAbstract:finAbstract]
+	print(substring)
+	
 def getName():
 	ListeDeFichierPdf=[] 
 	l = glob.glob('Papers/*.pdf')
 	for i in l: 
 		a=i.strip("Papers/")
 		ListeDeFichierPdf.append(a)
-	fichier = open("fichier1.txt", "w")
-	fichier.write(ListeDeFichierPdf[0])
-	fichier.close()
 	return(ListeDeFichierPdf)
 
 def main():
-	src = "Alexandrov"
-	fichier = "Papers/" + src + ".pdf"
-	cmd = 'pdf2txt ' + fichier + '>' + "Papers/" + src + ".txt"
-	os.system(cmd)
-	txt = "Papers/" + src + ".txt"
-	source = open(txt, "r")
-	destination = open("out.txt", "w")
-	print(getTitle('Alexandrov_2015_A Modified Tripartite Model for Document Representation in Internet Sociology'))
-	parser(source, destination)
-	try:
-		parser(source, destination)
-    
-	finally:
-		destination.close()
-		source.close()
-		
+	parser()
+	
 main()
 
 
@@ -71,18 +91,6 @@ main()
 
 
 
-import re
-f = open('Papers/Papers/Alexandrov.txt', "r+")
-content = f.read()
 
 
-debutAbstract = (content.find("Abstract"))
-print(debutAbstract)
-
-finAbstract = (content.find("\n\n", debutAbstract))
-print(finAbstract)
-
-
-substring = content[debutAbstract:finAbstract]
-print(substring)
     
