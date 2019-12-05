@@ -21,4 +21,6 @@ Parseur d’articles scientifiques en format texte
               - Récupérer le résumé ou abstract de l’auteur du fichier d’origine et l'écrire dans une balise <abstract>
               - Récupérer les références bibliographiques de l'article et l'écrire dans une balise <biblio>
 
-Lancement du programme : python PdfParser.py -{t, x}
+##### Lancement du programme : python PdfParser.py -{t, x}
+    - L'option -t entrainera la création de fichiers .txt
+    - L'option -x entrainera la création de fichiers .xml
