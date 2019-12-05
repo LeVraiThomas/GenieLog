@@ -12,26 +12,27 @@ def parser():
 	os.system('mkdir ParsedPapers')
 	ListeDeFichierPdf=getName()
 	for x in ListeDeFichierPdf:
-	    x = x.strip('.pdf')
-	    file_to_open = 'Papers/' + x + '.pdf'
-	    file_to_open = file_to_open.replace(' ', '\ ')
-	    file_to_read = 'ConvertedPapers/' + x + '.txt'
-	    temp = file_to_read
-	    file_to_read = file_to_read.replace(' ', '\ ')
-	    command = 'pdf2txt ' + file_to_open + ' > ' + file_to_read
-	    os.system(command)
-	    open_read = open(temp, 'r+')
-	    #Name
-	    parsed_file = 'ParsedPapers/' + x + '.txt'
-	    open_write = open(parsed_file, 'w+')
-	    open_write.write("Nom du fichier : "+x+"\n")
-	    #Title
-	    getTitle(open_read, open_write)
-	    #Abstract
-	    getAbstract(open_read, open_write)
-	    #Close
-	    open_read.close()
-	    open_write.close()
+		x = x.strip('.pdf')
+		file_to_open = 'Papers/' + x + '.pdf'
+		file_to_open = file_to_open.replace(' ', '\ ')
+		file_to_read = 'ConvertedPapers/' + x + '.txt'
+		temp = file_to_read
+		file_to_read = file_to_read.replace(' ', '\ ')
+		command = 'pdf2txt ' + file_to_open + ' > ' + file_to_read
+		os.system(command)
+		open_read = open(temp, 'r+')
+		#Name
+		parsed_file = 'ParsedPapers/' + x + '.txt'
+		open_write = open(parsed_file, 'w+')
+		open_write.write("Nom du fichier : "+x+"\n")
+		#Title
+		getTitle(open_read, open_write)
+		#Abstract
+		getAbstractAndBiblio(open_read, open_write)
+
+		#Close
+		open_read.close()
+		open_write.close()
 	
 
 	
@@ -40,13 +41,25 @@ def getTitle(f1, f2) :
     f2.write("Titre de l'article : "+first_lines)
     
 
-def getAbstract(f1, f2):
+def getAbstractAndBiblio(f1, f2):
 	content = f1.read()
 	debutAbstract = (content.find("Abstract"))
-	finAbstract = (content.find("\n\n", debutAbstract))
-	substring = content[debutAbstract:finAbstract]
-	f2.write("Abstract/Resume de l'article : "+substring+"\n") 
-	
+	if debutAbstract == -1:
+		debutAbstract = (content.find("ABSTRACT"))
+	finAbstract = (content.find("Introduction", debutAbstract))
+	if finAbstract == -1:
+		finAbstract = (content.find("INTRODUCTION", debutAbstract))
+	substringabstract = content[debutAbstract:finAbstract]
+	f2.write("\n"+substringabstract)
+
+	debutBiblio = (content.find("References"))
+	if debutBiblio == -1:
+			debutBiblio = (content.find("REFERENCES"))
+	finBiblio = (content.find("FF", debutBiblio))
+	substringbiblio = content[debutBiblio:finBiblio]
+	f2.write("\n" + substringbiblio)
+
+
 def getName():
 	ListeDeFichierPdf=[] 
 	l = glob.glob('Papers/*.pdf')
