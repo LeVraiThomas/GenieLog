@@ -26,9 +26,12 @@ def parser():
 	    open_write = open(parsed_file, 'w+')
 	    open_write.write("Nom du fichier : "+x+"\n")
 	    #Title
-	    getTitle(open_read, open_write)
+	    lastword = getTitle(open_read, open_write)
+	    content = open_read.read()
 	    #Abstract
-	    getAbstract(open_read, open_write)
+	    getAbstract(content, open_write)
+	    #Auteur
+	    getAuteur(content, open_write, lastword)
 	    #Close
 	    open_read.close()
 	    open_write.close()
@@ -38,13 +41,18 @@ def parser():
 def getTitle(f1, f2) :
     first_lines = f1.readline()
     f2.write("Titre de l'article : "+first_lines)
+    return "Representation"
     
+def getAuteur(f1, f2, lastword):
+	debutAuteur = (f1.find(lastword))
+	finAuteur = (f1.find("Abstract"))
+	paragrapheAuteur = f1[debutAuteur:finAuteur]
+	f2.write("La section auteurs et leur adresse :"+paragrapheAuteur)    
 
 def getAbstract(f1, f2):
-	content = f1.read()
-	debutAbstract = (content.find("Abstract"))
-	finAbstract = (content.find("\n\n", debutAbstract))
-	substring = content[debutAbstract:finAbstract]
+	debutAbstract = (f1.find("Abstract"))
+	finAbstract = (f1.find("\n\n", debutAbstract))
+	substring = f1[debutAbstract:finAbstract]
 	f2.write("Abstract/Resume de l'article : "+substring+"\n") 
 	
 def getName():
