@@ -40,11 +40,12 @@ def parserTXT():
 	    #Close
 	    open_read.close()
 	    open_write.close()
+
+
 	
 def parserXML():
 	init()
 	ListeDeFichierPdf=getName()
-	
 	for x in ListeDeFichierPdf:
 		article = etree.Element("article")
 		preamble = etree.SubElement(article, "preamble")
@@ -61,36 +62,53 @@ def parserXML():
 		command = 'pdf2txt ' + file_to_open + ' > ' + file_to_read
 		os.system(command)
 		open_read = open(temp, 'r+')
-		#Name
+		#Preamble
 		preamble.text = x
 		parsed_file = 'ParsedPapers/' + x + '.xml'
 		#Title
 		title = getTitle(open_read)
+		content = open_read.read()
 		titre.text = title
 		#Abstract
-		a = getAbstract(open_read)
+		a = getAbstract(content)
 		abstract.text = a
+		#Biblio
+		b = getBiblio(content)
+		biblio.text = b
+		#Arbre
 		tree = etree.ElementTree(article)
 		#Close
 		tree.write(parsed_file)
 		open_read.close()
-	    
-
-	    
-	    
+	      
 def getTitle(f1) :
     first_lines = f1.readline()
     return first_lines
     
 
 def getAbstract(f1):
-	content = f1.read()
-	debutAbstract = (content.find("Abstract"))
-	finAbstract = (content.find("\n\n", debutAbstract))
-	substring = content[debutAbstract:finAbstract]
-	return substring
+	debutAbstract = (f1.find("Abstract"))
+	if debutAbstract == -1:
+		debutAbstract = (f1.find("ABSTRACT"))
+	finAbstract = (f1.find("Introduction", debutAbstract))
+	if finAbstract == -1:
+		finAbstract = (f1.find("INTRODUCTION", debutAbstract))
+	substringabstract = f1[debutAbstract:finAbstract]
+	return substringabstract
 	
-	
+def getBiblio(f1):
+	debutBiblio = (f1.find("References"))
+	if debutBiblio == -1:
+		debutBiblio = (f1.find("REFERENCES"))
+	finBiblio = (f1.find("FF", debutBiblio))
+	substringbiblio = f1[debutBiblio:finBiblio]
+	#substringbiblio = substringbiblio.replace("\x", " ")
+	#substringbiblio = substringbiblio.replace("\n", " ")
+	#substringbiblio = substringbiblio.replace("-\n", " ")
+	#substringbiblio = substringbiblio.replace("-\n", " ")
+	#print(substringbiblio)
+	return substringbiblio
+
 def getName():
 	ListeDeFichierPdf=[] 
 	l = glob.glob('Papers/*.pdf')
