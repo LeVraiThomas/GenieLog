@@ -37,12 +37,16 @@ def parserTXT():
 	    #Abstract
 	    abstract = getAbstract(open_read)
 	    open_write.write("Abstract/Resume de l'article : "+abstract+"\n") 
+	    getTitle(open_read, open_write)
+	    content = open_read.read()
+	    #Auteur
+	    getAuteur(content, open_write)
+	    #Abstract
+	    getAbstract(content, open_write)
 	    #Close
 	    open_read.close()
 	    open_write.close()
 
-
-	
 def parserXML():
 	init()
 	ListeDeFichierPdf=getName()
@@ -69,6 +73,8 @@ def parserXML():
 		title = getTitle(open_read)
 		content = open_read.read()
 		titre.text = title
+		#Auteur
+
 		#Abstract
 		a = getAbstract(content)
 		abstract.text = a
@@ -82,8 +88,13 @@ def parserXML():
 	      
 def getTitle(f1) :
     first_lines = f1.readline()
-    return first_lines
+    return(first_lines)
     
+def getAuteur(f1):
+	finAuteur = (f1.find("Abstract"))
+	paragrapheAuteur = f1[:finAuteur]
+	return(paragrapheAuteur)
+
 
 def getAbstract(f1):
 	debutAbstract = (f1.find("Abstract"))
@@ -93,7 +104,8 @@ def getAbstract(f1):
 	if finAbstract == -1:
 		finAbstract = (f1.find("INTRODUCTION", debutAbstract))
 	substringabstract = f1[debutAbstract:finAbstract]
-	return substringabstract
+	return(substringabstract)
+
 	
 def getBiblio(f1):
 	debutBiblio = (f1.find("References"))
@@ -106,7 +118,7 @@ def getBiblio(f1):
 	#substringbiblio = substringbiblio.replace("-\n", " ")
 	#substringbiblio = substringbiblio.replace("-\n", " ")
 	#print(substringbiblio)
-	return substringbiblio
+	return(substringbiblio)
 
 def getName():
 	ListeDeFichierPdf=[] 
