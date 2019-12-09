@@ -1,3 +1,4 @@
+import re
 import os
 import glob
 import os.path
@@ -13,6 +14,17 @@ def init():
 	os.system('rm -r ParsedPapers')
 	os.system('mkdir ParsedPapers')
 	
+def displayMenu(file_format) :
+	print("You chose to convert your PDF files as "+file_format+" files") 
+	all_some = input("Do you want to convert all available files ? Y/N")
+	if(all_some == "N" or all_some == "n" or all_some == "No" or all_some == "no") :
+		choice = input("Please insert bellow the numbers given to the files you want to convert :")
+		pattern = re.compile("^([0-9][0-9]+)+$")
+		pattern.match(choice)
+	elif(all_some == "Y" or all_some == "Yes" or all_some == "y" or all_some == "yes") :
+		if file_format == ".txt" : parserTXT()
+		else : parserXML()
+		
 	
 def parserTXT():
 	init()
@@ -130,8 +142,8 @@ def getName():
 
 def main():
 	if len(sys.argv) < 2 : print("Veuillez signifier une option pour convertir correctement votre fichier (-t pour .txt et -x pour .xml)")
-	elif sys.argv[1]=="-t" : parserTXT()
-	elif sys.argv[1]=="-x" : parserXML()
+	elif sys.argv[1]=="-t" : displayMenu(".txt")
+	elif sys.argv[1]=="-x" : displayMenu(".xml")
 	else : print("Veuillez signifier une option pour convertir correctement votre fichier (-t pour .txt et -x pour .xml)")
 	
 main()
