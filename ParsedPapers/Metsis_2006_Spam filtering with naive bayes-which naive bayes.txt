@@ -1,0 +1,174 @@
+Nom du fichier : Metsis_2006_Spam filtering with naive bayes-which naive bayes
+Titre de l'article : Spam Filtering with Naive Bayes – Which Naive Bayes? ∗
+
+ABSTRACT
+Naive Bayes is very popular in commercial and open-source
+anti-spam e-mail ﬁlters. There are, however, several forms
+of Naive Bayes, something the anti-spam literature does not
+always acknowledge. We discuss ﬁve diﬀerent versions of
+Naive Bayes, and compare them on six new, non-encoded
+datasets, that contain ham messages of particular Enron
+users and fresh spam messages. The new datasets, which
+we make publicly available, are more realistic than previous
+comparable benchmarks, because they maintain the tempo-
+ral order of the messages in the two categories, and they
+emulate the varying proportion of spam and ham messages
+that users receive over time. We adopt an experimental
+procedure that emulates the incremental training of person-
+alized spam ﬁlters, and we plot roc curves that allow us to
+compare the diﬀerent versions of nb over the entire tradeoﬀ
+between true positives and true negatives.
+
+1.
+
+
+REFERENCES
+[1] I. Androutsopoulos, J. Koutsias, K. Chandrinos, and
+
+C. Spyropoulos. An experimental comparison of Naive
+Bayesian and keyword-based anti-spam ﬁltering with
+encrypted personal e-mail messages. In 23rd ACM
+SIGIR Conference, pages 160–167, Athens, Greece,
+2000.
+
+[2] I. Androutsopoulos, G. Paliouras, and E. Michelakis.
+
+Learning to ﬁlter unsolicited commercial e-mail.
+technical report 2004/2, NCSR “Demokritos”, 2004.
+
+[3] R. Beckermann, A. McCallum, and G. Huang.
+Automatic categorization of email into folders:
+benchmark experiments on Enron and SRI corpora.
+Technical report IR-418, University of Massachusetts
+Amherst, 2004.
+
+[4] X. Carreras and L. Marquez. Boosting trees for
+
+anti-spam email ﬁltering. In 4th International
+Conference on Recent Advances in Natural Language
+Processing, pages 58–64, Tzigov Chark, Bulgaria,
+2001.
+
+[5] P. Domingos and M. Pazzani. On the optimality of the
+simple Bayesian classiﬁer under zero-one loss. Machine
+Learning, 29(2–3):103130, 1997.
+
+[6] H. D. Drucker, D. Wu, and V. Vapnik. Support Vector
+Machines for spam categorization. IEEE Transactions
+On Neural Networks, 10(5):1048–1054, 1999.
+
+[7] S. Eyheramendy, D. Lewis, and D. Madigan. On the
+
+Naive Bayes model for text categorization. In 9th
+International Workshop on Artiﬁcial Intelligence and
+Statistics, pages 332–339, Key West, Florida, 2003.
+
+[8] T. Fawcett. In “vivo” spam ﬁltering: a challenge
+
+Figure 3: Learning curves for the multinomial NB with Boolean attributes and T = 0.5.
+
+problem for KDD. SIGKDD Explorations,
+5(2):140–148, 2003.
+
+[9] S. Hershkop and S. Stolfo. Combining email models
+for false positive reduction. In 11th ACM SIGKDD
+Conference, pages 98–107, Chicago, Illinois, 2005.
+
+[10] J. G. Hidalgo. Evaluating cost-sensitive unsolicited
+bulk email categorization. In 17th ACM Symposium
+on Applied Computing, pages 615–620, 2002.
+
+[11] J. G. Hidalgo and M. M. Lopez. Combining text and
+
+heuristics for cost-sensitive spam ﬁltering. In 4th
+Computational Natural Language Learning Workshop,
+pages 99–102, Lisbon, Portugal, 2000.
+
+[12] J. Hovold. Naive Bayes spam ﬁltering using
+
+word-position-based attributes. In 2nd Conference on
+Email and Anti-Spam, Stanford, CA, 2005.
+
+[13] J. T. J.D.M. Rennie, L. Shih and D. Karger. Tackling
+
+the poor assumptions of Naive Bayes classiﬁers. In
+20th International Conference on Machine Learning,
+pages 616–623, Washington, DC, 2003.
+
+[14] G. John and P. Langley. Estimating continuous
+
+distributions in Bayesian classiﬁers. In 11th
+Conference on Uncertainty in Artiﬁcial Intelligence,
+pages 338–345, Montreal, Quebec, 1995.
+
+[15] B. Klimt and Y. Yang. The Enron corpus: a new
+
+dataset for email classiﬁcation research. In 15th
+European Conference on Machine Learning and the
+8th European Conference on Principles and Practice
+of Knowledge Discovery in Databases, pages 217–226,
+Pisa, Italy, 2004.
+
+[16] A. Kolcz and J. Alspector. SVM-based ﬁltering of
+e-mail spam with content-speciﬁc misclassiﬁcation
+costs. In Workshop on Text Mining, IEEE
+International Conference on Data Mining, San Jose,
+California, 2001.
+
+[17] A. McCallum and K. Nigam. A comparison of event
+
+models for naive bayes text classiﬁcation. In AAAI’98
+Workshop on Learning for Text Categorization, pages
+41–48, Madison, Wisconsin, 1998.
+
+[18] E. Michelakis, I. Androutsopoulos, G. Paliouras,
+
+G. Sakkis, and P. Stamatopoulos. Filtron: a
+learning-based anti-spam ﬁlter. In 1st Conference on
+Email and Anti-Spam, Mountain View, CA, 2004.
+
+[19] P. Pantel and D. Lin. SpamCop: a spam classiﬁcation
+
+and organization program. In Learning for Text
+Categorization – Papers from the AAAI Workshop,
+pages 95–98, Madison, Wisconsin, 1998.
+
+[20] F. Peng, D. Schuurmans, and S. Wang. Augmenting
+
+naive bayes classiﬁers with statistical language
+models. Information Retrieval, 7:317–345, 2004.
+
+[21] M. Sahami, S. Dumais, D. Heckerman, and
+
+E. Horvitz. A Bayesian approach to ﬁltering junk
+e-mail. In Learning for Text Categorization – Papers
+from the AAAI Workshop, pages 55–62, Madison,
+Wisconsin, 1998.
+
+[22] G. Sakkis, I. Androutsopoulos, G. Paliouras,
+
+V. Karkaletsis, C. Spyropoulos, and P. Stamatopoulos.
+Stacking classiﬁers for anti-spam ﬁltering of e-mail. In
+Conference on Empirical Methods in Natural
+Language Processing, pages 44–50, Carnegie Mellon
+University, Pittsburgh, PA, 2001.
+
+[23] G. Sakkis, I. Androutsopoulos, G. Paliouras,
+
+V. Karkaletsis, C. Spyropoulos, and P. Stamatopoulos.
+A memory-based approach to anti-spam ﬁltering for
+mailing lists. Information Retrieval, 6(1):49–73, 2003.
+
+[24] K.-M. Schneider. A comparison of event models for
+
+Naive Bayes anti-spam e-mail ﬁltering. In 10th
+Conference of the European Chapter of the ACL,
+pages 307–314, Budapest, Hungary, 2003.
+
+[25] K.-M. Schneider. On word frequency information and
+negative evidence in Naive Bayes text classiﬁcation. In
+4th International Conference on Advances in Natural
+Language Processing, pages 474–485, Alicante, Spain,
+2004.
+
+Enron1 - Multinomial NB, Boolean - 3000 Attributes 0.70.750.80.850.90.9511471013161922252831343740434649Number of emails x 100Spam RecallHam RecallEnron2 - Multinomial NB, Boolean - 3000 Attributes 0.70.750.80.850.90.9511471013161922252831343740434649525558Number of emails x 100Spam RecallHam RecallEnron3 - Multinomial NB, Boolean - 3000 Attributes 0.70.750.80.850.90.95114710131619222528313437404346495255Number of emails x 100Spam RecallHam RecallEnron4 - Multinomial NB, Boolean - 3000 Attributes0.70.750.80.850.90.9511471013161922252831343740434649525558Number of emails x 100Spam RecallHam RecallEnron5 - Multinomial NB, Boolean - 3000 Attributes 0.70.750.80.850.90.9511471013161922252831343740434649Number of emails x 100Spam RecallHam RecallEnron6 - Multinomial NB, Boolean - 3000 Attributes 0.70.750.80.850.90.9511471013161922252831343740434649525558Number of emails x 100Spam RecallHam Recall
