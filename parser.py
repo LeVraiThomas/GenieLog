@@ -73,8 +73,7 @@ def parserXML():
 		a = getAbstract(content)
 		abstract.text = a
 		#Biblio
-		b = getBiblio(content)
-		biblio.text = b
+
 		#Arbre
 		tree = etree.ElementTree(article)
 		#Close
