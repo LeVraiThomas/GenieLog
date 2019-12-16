@@ -28,7 +28,7 @@ def parser():
 		#Title
 		getTitle(open_read, open_write)
 		#Abstract
-		getAbstractAndBiblio(open_read, open_write)
+		getAbstractAndIntroAndBiblio(open_read, open_write)
 
 		#Close
 		open_read.close()
@@ -41,7 +41,7 @@ def getTitle(f1, f2) :
     f2.write("Titre de l'article : "+first_lines)
     
 
-def getAbstractAndBiblio(f1, f2):
+def getAbstractAndIntroAndBiblio(f1, f2):
 	content = f1.read()
 	debutAbstract = (content.find("Abstract"))
 	if debutAbstract == -1:
@@ -50,14 +50,35 @@ def getAbstractAndBiblio(f1, f2):
 	if finAbstract == -1:
 		finAbstract = (content.find("INTRODUCTION", debutAbstract))
 	substringabstract = content[debutAbstract:finAbstract]
-	f2.write("\n"+substringabstract)
+	f2.write("\n"+substringabstract+"\n")
+
+	#intro
+	debutIntro = finAbstract
+	finIntro = (content.find("\n\n2 "))
+	if finIntro ==-1:
+		finIntro = (content.find("\n\n2."))
+		if finIntro ==-1:
+			finIntro = (content.find("\n\nII."))
+			if finIntro == -1:
+				finIntro = (content.find("2 "))
+	substringIntro=content[debutIntro:finIntro]
+	f2.write("\n"+substringIntro+"\n")
+
+	#corps
+
+	debutCorp = finIntro
+	finCorp = (content.find("Conclusion"))
+	if finCorp ==-1:
+		finCorp = (content.find("CONCLUSION"))
+	substringCorp=content[debutCorp:finCorp]
+	f2.write("\n"+substringCorp+"\n")
 
 	debutBiblio = (content.find("References"))
 	if debutBiblio == -1:
 			debutBiblio = (content.find("REFERENCES"))
 	finBiblio = (content.find("FF", debutBiblio))
 	substringbiblio = content[debutBiblio:finBiblio]
-	f2.write("\n" + substringbiblio)
+	f2.write("\n" + substringbiblio+"\n")
 
 
 def getName():
