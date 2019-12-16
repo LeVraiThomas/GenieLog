@@ -56,6 +56,7 @@ def parserXML():
 		titre = etree.SubElement(article, "titre")
 		auteur = etree.SubElement(article, "auteur")
 		abstract = etree.SubElement(article, "abstract")
+		conclusion = etree.SubElement(article, "conclusion")
 		biblio = etree.SubElement(article, "biblio")
 		x = x.strip('.pdf')
 		file_to_open = 'Papers/' + x + '.pdf'
@@ -74,10 +75,14 @@ def parserXML():
 		content = open_read.read()
 		titre.text = title
 		#Auteur
+		author = getAuteur(content)
 
 		#Abstract
 		a = getAbstract(content)
 		abstract.text = a
+		#Conclusion
+		c = getConclusion(content)
+		conclusion.text = c
 		#Biblio
 
 		#Arbre
@@ -119,6 +124,24 @@ def getBiblio(f1):
 	#substringbiblio = substringbiblio.replace("-\n", " ")
 	#print(substringbiblio)
 	return(substringbiblio)
+
+def getConclusion(f1):
+	debutConclusion = (f1.find("Conclusion"))
+	if debutConclusion== -1:
+		debutConclusion = (f1.find("CONCLUSION"))
+	if debutConclusion== -1:
+		debutConclusion = (f1.find("Conclusions"))
+	if debutConclusion== -1:
+		debutConclusion = (f1.find("CONCLUSIONS"))
+	finConclusion = (f1.find("ACKNOWLEDGEMENT", debutConclusion))
+	if finConclusion == -1:
+		finConclusion = (f1.find("Acknowledgements", debutConclusion))
+	if finConclusion == -1:
+		finConclusion = (f1.find("References", debutConclusion))
+	if finConclusion == -1:
+		finConclusion = (f1.find("REFERENCES", debutConclusion))
+	substringConclusion = f1[debutConclusion:finConclusion]
+	return(substringConclusion)
 
 def getName():
 	ListeDeFichierPdf=[] 
