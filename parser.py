@@ -7,6 +7,8 @@ from os.path import basename, splitext
 import sys
 from lxml import etree
 	
+ListeDeFichierPdf = []
+
 def init():
 	#Creating directory to put .txt files
 	os.system('rm -r ConvertedPapers')
@@ -16,19 +18,33 @@ def init():
 	
 def displayMenu(file_format) :
 	print("You chose to convert your PDF files as "+file_format+" files") 
-	all_some = input("Do you want to convert all available files ? Y/N")
+	print("Do you want to convert all available files ? Y/N")
+	all_some = input()
 	if(all_some == "N" or all_some == "n" or all_some == "No" or all_some == "no") :
+		print("These are the available files : ")
+		ListeToConvert = []
+		ListeDeFichierPdf=getName() 
+		i=0
+		for x in ListeDeFichierPdf :
+			j = i+1
+			print(j, "-" + x)
+			i+=1
 		choice = input("Please insert bellow the numbers given to the files you want to convert :")
 		pattern = re.compile("^([0-9][0-9]+)+$")
 		pattern.match(choice)
+		i = 0
+		for z in ListeDeFichierPdf :
+			if(i == choice) :
+				ListeToConvert.append(x)
+			i+=1
+		for y in ListeToConvert :
+			parserTXTsolo(y)
 	elif(all_some == "Y" or all_some == "Yes" or all_some == "y" or all_some == "yes") :
 		if file_format == ".txt" : parserTXT()
 		else : parserXML()
 		
 	
 def parserTXT():
-	init()
-	ListeDeFichierPdf=getName()
 	for x in ListeDeFichierPdf:
 	    x = x.strip('.pdf')
 	    file_to_open = 'Papers/' + x + '.pdf'
@@ -59,9 +75,38 @@ def parserTXT():
 	    open_read.close()
 	    open_write.close()
 
+def parserTXTsolo(x):
+	x = x.strip('.pdf')
+	file_to_open = 'Papers/' + x + '.pdf'
+	file_to_open = file_to_open.replace(' ', '\ ')
+	file_to_read = 'ConvertedPapers/' + x + '.txt'
+	temp = file_to_read
+	file_to_read = file_to_read.replace(' ', '\ ')
+	command = 'pdf2txt ' + file_to_open + ' > ' + file_to_read
+	os.system(command)
+	open_read = open(temp, 'r+')
+	#Name
+	parsed_file = 'ParsedPapers/' + x + '.txt'
+	open_write = open(parsed_file, 'w+')
+	open_write.write("Nom du fichier : "+x+"\n")
+	#Title
+	titre = getTitle(open_read)
+	open_write.write("Titre de l'article : "+titre)
+	#Abstract
+	abstract = getAbstract(open_read)
+	open_write.write("Abstract/Resume de l'article : "+abstract+"\n") 
+	getTitle(open_read, open_write)
+	content = open_read.read()
+	#Auteur
+	getAuteur(content, open_write)
+	#Abstract
+	getAbstract(content, open_write)
+	#Close
+	open_read.close()
+	open_write.close()
+
 def parserXML():
 	init()
-	ListeDeFichierPdf=getName()
 	for x in ListeDeFichierPdf:
 		article = etree.Element("article")
 		preamble = etree.SubElement(article, "preamble")
@@ -141,6 +186,7 @@ def getName():
 	return(ListeDeFichierPdf)
 
 def main():
+	init()
 	if len(sys.argv) < 2 : print("Veuillez signifier une option pour convertir correctement votre fichier (-t pour .txt et -x pour .xml)")
 	elif sys.argv[1]=="-t" : displayMenu(".txt")
 	elif sys.argv[1]=="-x" : displayMenu(".xml")
