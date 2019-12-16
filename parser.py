@@ -5,7 +5,7 @@ import re
 from os.path import basename, splitext
 import sys
 from lxml import etree
-	
+
 def init():
 	#Creating directory to put .txt files
 	os.system('rm -r ConvertedPapers')
@@ -56,6 +56,7 @@ def parserXML():
 		titre = etree.SubElement(article, "titre")
 		auteur = etree.SubElement(article, "auteur")
 		abstract = etree.SubElement(article, "abstract")
+		discussion = etree.SubElement(article, "discussion")
 		biblio = etree.SubElement(article, "biblio")
 		x = x.strip('.pdf')
 		file_to_open = 'Papers/' + x + '.pdf'
@@ -78,6 +79,9 @@ def parserXML():
 		#Abstract
 		a = getAbstract(content)
 		abstract.text = a
+		#Discussion
+		d = getDiscussion(content)
+		discussion.text = d
 		#Biblio
 
 		#Arbre
@@ -119,6 +123,16 @@ def getBiblio(f1):
 	#substringbiblio = substringbiblio.replace("-\n", " ")
 	#print(substringbiblio)
 	return(substringbiblio)
+
+def getDiscussion(f1):
+	debutDiscussion = (f1.find("Discussion"))
+	if debutDiscussion == -1:
+		debutDiscussion = (f1.find("DISCUSSION"))
+	finDiscussion = (f1.find("CONCLUSION", debutDiscussion))
+	if finDiscussion == -1:
+		finDiscussion= (f1.find("Conclusion", debutDiscussion))
+	substringdiscussion = f1[debutDiscussion:finDiscussion]
+	return(substringdiscussion)
 
 def getName():
 	ListeDeFichierPdf=[] 
