@@ -53,6 +53,7 @@ def getAbstractAndIntroAndBiblio(f1, f2):
 	f2.write("\n"+substringabstract+"\n")
 
 	#intro
+	
 	debutIntro = finAbstract
 	finIntro = (content.find("\n\n2 "))
 	if finIntro ==-1:
@@ -72,6 +73,9 @@ def getAbstractAndIntroAndBiblio(f1, f2):
 		finCorp = (content.find("CONCLUSION"))
 	substringCorp=content[debutCorp:finCorp]
 	f2.write("\n"+substringCorp+"\n")
+
+
+	#biblio
 
 	debutBiblio = (content.find("References"))
 	if debutBiblio == -1:
