@@ -142,6 +142,7 @@ def parserTXT():
 	ListeDeFichierPdf=getName()
 	global firstline
 	firstline = ""
+	i=1
 	for x in ListeDeFichierPdf:
 	    x = x.strip('.pdf')
 	    file_to_open = 'Papers/' + x + '.pdf'
@@ -156,7 +157,6 @@ def parserTXT():
 	    parsed_file = 'ParsedPapers/' + x + '.txt'
 	    open_write = open(parsed_file, 'w+')
 	    open_write.write("Nom du fichier : \n \t"+x+"\n")
-	    print(x)
 	    #Title
 	    titre = getTitle(open_read)
 	    open_write.write("Titre de l'article : \n "+titre.replace('\n', ' ')+"...")
@@ -181,6 +181,8 @@ def parserTXT():
 	    #Bibliography
 	    bibliography = getBibliography(open_read)
 	    open_write.write("\nBibliographie : \n\t"+bibliography.replace('\n', ' ')+"\n")
+	    print(i, " fichier(s) converti(s)")
+	    i=i+1
 	    
 	    open_read.close()
 	    open_write.close()
@@ -328,7 +330,8 @@ def parserXML():
 		d = getDiscussion(open_read).translate(mpa)
 		discussion.text = d
 		#Biblio
-		b = getBibliography(open_read)
+		b = getBibliography(open_read).translate(mpa)
+		biblio.text = b
 		#Arbre
 		tree = etree.ElementTree(article)
 		#Close
