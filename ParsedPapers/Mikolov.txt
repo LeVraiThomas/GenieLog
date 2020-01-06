@@ -1,0 +1,45 @@
+Nom du fichier : 
+ 	Mikolov
+Titre de l'article : 
+ 	3 1 0 ... 
+Auteurs : 
+VI. S AND FUTURE WORK
+	 
+	  
+	 
+	p 
+	e 
+	S 
+	7 
+	 
+	  
+	 
+	  
+	  
+	] 
+	L 
+	C 
+	. 
+	s 
+	c 
+	[ 
+	  
+	  
+	 
+	3 
+	v 
+
+Introduction : 
+	 	8  	7  	3  	  	.  	  	1  	0  	3  	1  	:  	v  	i  	X  	r  	a  	  	Efﬁcient Estimation of Word Representations in  	  	Vector Space  	  	Tomas Mikolov...
+
+Corps : 
+	2 Model Architectures 	  	Many different types of models were proposed for estimating continuous representations of words,  	including the well-known Latent Semantic Analysis (LSA) and Latent Dirichlet Allocation (LDA).  	In this paper, we focus on distributed representations of words learned by neu...
+
+Conclusion : 
+	4 s 	  	To compare the quality of different versions of word vectors, previous papers typically use a table  	showing example words and their most sim...
+
+Discussion : 
+	4 s ...
+
+Bibliographie : 
+	4 s 

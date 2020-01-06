@@ -1,0 +1,63 @@
+Nom du fichier : 
+ 	Torres
+Titre de l'article : 
+ 	Summary Evaluation  with and without References ... 
+Auteurs : 
+s
+	Juan-Manuel Torres-Moreno, Horacio Saggion, Iria da Cunha, Eric SanJuan, and Patricia Vel´azquez-Morales 
+	 
+	text 
+	 
+	study 
+	of 
+	 
+	summarization 
+	 
+	Abstract—We 
+	evaluation 
+	 
+	a new content-based method for 
+	systems without 
+	the 
+	human models which is used to produce system rankings. 
+	The research is carried out using a new content-based 
+	evaluation framework called FRESA to compute a variety of 
+	divergences among probability distributions. We apply our 
+	comparison framework to various well-established content-based 
+	evaluation measures in text summarization such as COVERAGE, 
+	their 
+	RESPONSIVENESS, PYRAMIDS 
+	associations 
+	text 
+	including 
+	generic multi-document summarization in English and French, 
+	focus-based multi-document 
+	summarization in English and 
+	generic single-document summarization in French and Spanish. 
+	Index Terms—Text summarization evaluation, content-based 
+	 
+	summarization tasks 
+	 
+	and ROUGE 
+	 
+	in various 
+	 
+	studying 
+	 
+	evaluation measures, divergences. 
+	 
+
+Introduction : 
+	  	  	issue  	  	complex and controversial  	  	T EXT summarization evaluation has always been a  	  	in computational  	linguistics. In the last deca...
+
+Corps : 
+	 RELATED WORK 	  	One of the ﬁrst works to use content-based measures in  	text summarization evaluation is due to [5], who presented an  	evaluation framework to compare rankings of summarization  	systems produced by recall and cosine-based measures. They  	showed that  	there was weak correlation...
+
+Conclusion : 
+	VI. S AND FUTURE WORK 	  	This paper has presented a series of experiments in  	content-based measures that do not rely on the use of model  	summarie...
+
+Discussion : 
+	VI. S AND FUTURE WORK ...
+
+Bibliographie : 
+	VI. S AND FUTURE WORK 

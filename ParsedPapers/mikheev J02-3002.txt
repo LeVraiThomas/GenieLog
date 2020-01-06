@@ -1,0 +1,32 @@
+Nom du fichier : 
+ 	mikheev J02-3002
+Titre de l'article : 
+ 	Periods, Capitalized Words, etc.  Andrei Mikheev∗ ... 
+Auteurs : 
+6 s
+	 
+	In this article we present an approach for tackling three important aspects of text normaliza- 
+	tion: sentence boundary disambiguation, disambiguation of capitalized words in positions where 
+	capitalization is expected, and identiﬁcation of abbreviations. As opposed to the two dominant 
+	techniques of computing statistics or writing specialized grammars, our document-centered ap- 
+	proach works by considering suggestive local contexts and repetitions of individual words within 
+	a document. This approach proved to be robust to domain shifts and new lexica and produced per- 
+	formance on the level with the highest reported results. When incorporated into a part-of-speech 
+	tagger, it helped reduce the error rate signiﬁcantly on capitalized words and sentence boundaries. 
+	We also investigated the portability to other languages and obtained encouraging results. 
+	 
+
+Introduction : 
+	.  	  	Disambiguation of sentence boundaries and normalization of capitalized words, as  	well as identiﬁcation of abbreviations, however small in com...
+
+Corps : 
+	2. Performance Measure, Corpora for Evaluation, and Intended Markup 	  	A standard practice for measuring the performance of a system for the class of tasks  	with which we are concerned in this article is to calculate its error rate:  	  	error rate =  	  	incorrectly assigned  	all assigned by sys...
+
+Conclusion : 
+	2. Performance Measure, Corpora for Evaluation, and Intended Markup ...
+
+Discussion : 
+	2. Performance Measure, Corpora for Evaluation, and Intended Markup ...
+
+Bibliographie : 
+	2. Performance Measure, Corpora for Evaluation, and Intended Markup 

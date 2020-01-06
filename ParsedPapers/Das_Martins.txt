@@ -1,0 +1,43 @@
+Nom du fichier : 
+ 	Das_Martins
+Titre de l'article : 
+ 	A Survey on Automatic Text Summarization  Dipanjan Das ... 
+Auteurs : 
+2. Performance Measure, Corpora for Evaluation, and Intended Markup
+	Andr´e F.T. Martins 
+	 
+	Language Technologies Institute 
+	Carnegie Mellon University 
+	{dipanjan, afm}@cs.cmu.edu 
+	 
+	November 21, 2007 
+	 
+	Abstract 
+	 
+	The increasing availability of online information has necessitated intensive 
+	research in the area of automatic text summarization within the Natural Lan- 
+	guage Processing (NLP) community. Over the past half a century, the prob- 
+	lem has been addressed from many diﬀerent perspectives, in varying domains 
+	and using various paradigms. This survey intends to investigate some of the 
+	most relevant approaches both in the areas of single-document and multiple- 
+	document summarization, giving special emphasis to empirical methods and 
+	extractive techniques. Some promising approaches that concentrate on speciﬁc 
+	details of the summarization problem are also discussed. Special attention is 
+	devoted to automatic evaluation of summarization systems, as future research 
+	on summarization is strongly dependent on progress in this area. 
+	 
+
+Introduction : 
+	 	  	Introduction  	  	The subﬁeld of summarization has been investigated by the NLP community for  	nearly the last half century. Radev et al. (2002)...
+
+Corps : 
+	2 Single-Document Summarization 	  	Usually, the ﬂow of information in a given document is not uniform, which means  	that some parts are more important than others. The major challenge in summa-  	rization lies in distinguishing the more informative parts of a document from the  	less ones. Though ...
+
+Conclusion : 
+	6  	  	The rate of information growth due to the World Wide Web has called for a need  	to develop eﬃcient and accurate summarization systems. Althoug...
+
+Discussion : 
+	s 	  	We would like to thank Noah Smith and Einat Minkov for valuable suggestions  	during the course of the survey. We would also like to thank Alex ...
+
+Bibliographie : 
+	s 

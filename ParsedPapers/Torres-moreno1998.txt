@@ -1,0 +1,42 @@
+Nom du fichier : 
+ 	Torres-moreno1998
+Titre de l'article : 
+ 	LETTER  Communicated by Scott Fahlman ... 
+Auteurs : 
+4 s
+	Efﬁcient Adaptive Learning for Classiﬁcation Tasks with 
+	Binary Units 
+	 
+	J. Manuel Torres Moreno 
+	Mirta B. Gordon 
+	D´epartement de Recherche Fondamentale sur la Mati`ere Condens´ee, CEA Grenoble, 
+	38054 Grenoble Cedex 9, France 
+	 
+	This article presents a new incremental learning algorithm for classi- 
+	ﬁcation tasks, called NetLines, which is well adapted for both binary 
+	and real-valued input patterns. It generates small, compact feedforward 
+	neural networks with one hidden layer of binary units and binary output 
+	units. A convergence theorem ensures that solutions with a ﬁnite num- 
+	ber of hidden units exist for both binary and real-valued input patterns. 
+	An implementation for problems with more than two classes, valid 
+	for any binary classiﬁer, is proposed. The generalization error and 
+	the size of the resulting networks are compared to the best published 
+	results on well-known classiﬁcation benchmarks. Early stopping is shown 
+	to decrease overﬁtting, without improving the generalization perfor- 
+	mance. 
+	 
+
+Introduction : 
+	  	  	Feedforward neural networks have been successfully applied to the prob-  	lem of learning pattern classiﬁcation from examples. The relationship ...
+
+Corps : 
+	2 The Incremental Learning Strategy 	  	2.1 Deﬁnitions. We are given a training set of P input-output examples  	fE» „; ¿ „g, where „ D 1; 2; : : : ; P. The inputs E» „ D .1; » „  	/ may be  	· 1,  	binary or real valued NC1 dimensional vectors. The ﬁrst component » „  	the same for all the patterns...
+
+Conclusion : 
+	6  	  	We presented an incremental learning algorithm for classiﬁcation, which we  	call NetLines. It generates small feedforward neural networks with...
+
+Discussion : 
+	6  ...
+
+Bibliographie : 
+	6  

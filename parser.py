@@ -163,26 +163,47 @@ def parserTXT():
 		titre = getTitle(open_read)
 		open_write.write("Titre de l'article : \n "+titre.replace('\n', ' ')+"...")
 	    #Auteur
-		authors = getAuthor(open_read)
-		open_write.write(" \nAuteurs : \n"+authors)
-		#Abstract
-		abstract = getAbstract(open_read)
-		open_write.write("\nAbstract/Resume de l'article : \n"+abstract.replace('\n', ' ')[0 : 150]+"...\n") 
-		#Introduction
-		intro = getIntro(open_read)
-		open_write.write("\nIntroduction : \n\t"+intro.replace('\n', ' ')[0 : 150]+"...\n")
-		#Corps
-		corps = getCorps(open_read)
-		open_write.write("\nCorps : \n\t"+corps.replace('\n', ' ')[0 : 300]+"...\n")
-		#Conclusion
-		conclusion = getConclusion(open_read)
-		open_write.write("\nConclusion : \n\t"+conclusion.replace('\n', ' ')[0 : 150]+"...\n")
-		#Discussion
-		discussion = getDiscussion(open_read)
-		open_write.write("\nDiscussion : \n\t"+discussion.replace('\n', ' ')[0 : 150]+"...\n")
-		#Bibliography
-		bibliography = getBibliography(open_read)
-		open_write.write("\nBibliographie : \n\t"+bibliography.replace('\n', ' ')+"\n")
+		if(ifAbstract(open_read)) :
+			authors = getAuthor(open_read)
+			open_write.write(" \nAuteurs : \n"+authors)
+			#Abstract
+			abstract = getAbstract(open_read)
+			open_write.write("\nAbstract/Resume de l'article : \n"+abstract.replace('\n', ' ')[0 : 150]+"...\n") 
+			#Introduction
+			intro = getIntro(open_read)
+			open_write.write("\nIntroduction : \n\t"+intro.replace('\n', ' ')[0 : 150]+"...\n")
+			#Corps
+			corps = getCorps(open_read)
+			open_write.write("\nCorps : \n\t"+corps.replace('\n', ' ')[0 : 300]+"...\n")
+			#Conclusion
+			conclusion = getConclusion(open_read)
+			open_write.write("\nConclusion : \n\t"+conclusion.replace('\n', ' ')[0 : 150]+"...\n")
+			#Discussion
+			discussion = getDiscussion(open_read)
+			open_write.write("\nDiscussion : \n\t"+discussion.replace('\n', ' ')[0 : 150]+"...\n")
+			#Bibliography
+			bibliography = getBibliography(open_read)
+			open_write.write("\nBibliographie : \n\t"+bibliography.replace('\n', ' ')+"\n")
+		else :
+			authors = getAbstract(open_read)
+			open_write.write(" \nAuteurs : \n"+authors)
+			#Introduction
+			intro = getIntro(open_read)
+			open_write.write("\nIntroduction : \n\t"+intro.replace('\n', ' ')[0 : 150]+"...\n")
+			#Corps
+			corps = getCorps(open_read)
+			open_write.write("\nCorps : \n\t"+corps.replace('\n', ' ')[0 : 300]+"...\n")
+			#Conclusion
+			conclusion = getConclusion(open_read)
+			open_write.write("\nConclusion : \n\t"+conclusion.replace('\n', ' ')[0 : 150]+"...\n")
+			#Discussion
+			discussion = getDiscussion(open_read)
+			open_write.write("\nDiscussion : \n\t"+discussion.replace('\n', ' ')[0 : 150]+"...\n")
+			#Bibliography
+			bibliography = getBibliography(open_read)
+			open_write.write("\nBibliographie : \n\t"+bibliography.replace('\n', ' ')+"\n")
+			
+		
 		print(i, " fichier(s) converti(s)")
 		i=i+1
 	    
@@ -222,7 +243,7 @@ def getAbstract(f1) :
 	global firstline
 	abstract = firstline
 	for line in f1 :
-		if line.startswith("Introduction") or line.startswith("introduction") or line.startswith("INTRODUCTION") or line.startswith("1") or line.startswith("I.") :
+		if line.startswith("Introduction") or line.startswith("introduction") or line.startswith("INTRODUCTION") or line.startswith("1") or line.startswith("I.") or line.startswith("1. Introduction") or line.startswith("I. INTRODUCTION"):
 			firstline = line.replace("Introduction", "").replace("introduction", "").replace("INTRODUCTION", "").replace("1", "").replace("I.", "");
 			break
 		else :

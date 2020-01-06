@@ -1,0 +1,21 @@
+Nom du fichier : 
+ 	Gonzalez_2018_Wisebe
+Titre de l'article : 
+ 	WiSeBE: Window-Based Sentence  Boundary Evaluation ... 
+Auteurs : 
+	Carlos-Emiliano Gonz´alez-Gallardo1,2(B) and Juan-Manuel Torres-Moreno1,2 
+
+Introduction : 
+	 LIA - Universit´e d’Avignon et des Pays de Vaucluse, 339 chemin des Meinajaries, 	  	84140 Avignon, France  	  	carlos-emiliano.gonzalez-gallardo@alu...
+
+Corps : 
+	2 D´epartement de GIGL, ´Ecole Polytechnique de Montr´eal, 	  	C.P. 6079, succ. Centre-ville, Montr´eal, Qu´ebec H3C 3A7, Canada  	  	Abstract. Sentence Boundary Detection (SBD) has been a major  	research topic since Automatic Speech Recognition transcripts have been  	used for further Natural Lang...
+
+Conclusion : 
+	6 s 	  	In this paper we presented WiSeBE, a semi-automatic multi-reference sentence  	boundary evaluation protocol based on the necessity of having a...
+
+Discussion : 
+	6 s ...
+
+Bibliographie : 
+	6 s 
