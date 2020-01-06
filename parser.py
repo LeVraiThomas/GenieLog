@@ -1,4 +1,4 @@
-import os
+	import os
 import glob
 import os.path
 import re
@@ -256,8 +256,7 @@ def getConclusion(f1) :
 	
 	for line in f1 :
 		if re.match("[0-9| ]*Discussion", line)  or re.match("[0-9| ]*DISCUSSION", line) or re.match("[0-9| ]*Acknowledgement", line) or re.match("[0-9| ]*ACKNOWLEDGEMENT", line) or re.match("(I|X|V)*. Discussion", line)  or re.match("(I|X|V)*. DISCUSSION", line) or re.match("(I|X|V)*. Acknowledgement", line) or re.match("(I|X|V)*. ACKNOWLEDGEMENT", line) or re.match("[0-9]*. Discussion", line)  or re.match("[0-9]*. DISCUSSION", line) or re.match("[0-9]*. Acknowledgement", line) or re.match("[0-9]*. ACKNOWLEDGEMENT", line):
-			firstline = line.replace("Discussion", "").replace("discussion", "").replace("DISCUSSION", "").replace("Acknowledgement", "").replace("acknowledgement", "").replace("ACKNOWLEDGEMENT", "")
-			print(line)
+			firstline = line.replace("Discussion", "").replace("discussion", "").replace("DISCUSSION", "").replace("Acknowledgement", "").replace("acknowledgement", "").replace("ACKNOWLEDGEMENT", "")		
 			break
 		else :
 			concl += "\t"+line.replace('\n', ' ')+"\n"
