@@ -5,6 +5,10 @@ import re
 from os.path import basename, splitext
 import sys
 from lxml import etree
+from unicodedata import *
+
+#Used when a part ending is the begining of another one
+firstline = ""
 
 def init():
 	#Creating directory to put .txt files
@@ -17,6 +21,8 @@ def init():
 def parserTXT():
 	init()
 	ListeDeFichierPdf=getName()
+	global firstline
+	firstline = ""
 	for x in ListeDeFichierPdf:
 	    x = x.strip('.pdf')
 	    file_to_open = 'Papers/' + x + '.pdf'
@@ -30,27 +36,146 @@ def parserTXT():
 	    #Name
 	    parsed_file = 'ParsedPapers/' + x + '.txt'
 	    open_write = open(parsed_file, 'w+')
-	    open_write.write("Nom du fichier : "+x+"\n")
+	    open_write.write("Nom du fichier : \n \t"+x+"\n")
+	    print(x)
 	    #Title
 	    titre = getTitle(open_read)
-	    open_write.write("Titre de l'article : "+titre)
+	    open_write.write("Titre de l'article : \n "+titre.replace('\n', ' ')+"...")
+	    #Auteur
+	    authors = getAuthor(open_read)
+	    open_write.write(" \nAuteurs : \n"+authors)
 	    #Abstract
 	    abstract = getAbstract(open_read)
-	    open_write.write("Abstract/Resume de l'article : "+abstract+"\n") 
-	    getTitle(open_read, open_write)
-	    content = open_read.read()
-	    #Auteur
-	    getAuteur(content, open_write)
-	    #Abstract
-	    getAbstract(content, open_write)
-	    #Close
+	    open_write.write("\nAbstract/Resume de l'article : \n"+abstract.replace('\n', ' ')[0 : 150]+"...\n") 
+	    #Introduction
+	    intro = getIntro(open_read)
+	    open_write.write("\nIntroduction : \n\t"+intro.replace('\n', ' ')[0 : 150]+"...\n")
+	    #Corps
+	    corps = getCorps(open_read)
+	    open_write.write("\nCorps : \n\t"+corps.replace('\n', ' ')[0 : 300]+"...\n")
+	    #Conclusion
+	    conclusion = getConclusion(open_read)
+	    open_write.write("\nConclusion : \n\t"+conclusion.replace('\n', ' ')[0 : 150]+"...\n")
+	    #Discussion
+	    discussion = getDiscussion(open_read)
+	    open_write.write("\nDiscussion : \n\t"+discussion.replace('\n', ' ')[0 : 150]+"...\n")
+	    #Bibliography
+	    bibliography = getBibliography(open_read)
+	    open_write.write("\nBibliographie : \n\t"+bibliography.replace('\n', ' ')+"\n")
+	    #test : print(x, titre, authors, abstract)
+	    
 	    open_read.close()
 	    open_write.close()
+
+
+def getTitle(f1) :
+    first_lines = f1.readline()
+    first_lines += f1.readline()
+    first_lines += f1.readline()
+    return("\t"+first_lines)
+    
+    
+#The two first lines for f1 have been read previously so we just have to stop when we find the next keyword
+def getAuthor(f1) :
+	global firstline
+	authors = firstline
+	for line in f1 :
+		if line.startswith("Abstract") or line.startswith("abstract") or line.startswith("ABSTRACT") :
+			firstline = line.replace("Abstract", "").replace("abstract", "").replace("ABSTRACT", "");
+			break
+		else :
+			authors += "\t"+line.replace('\n', ' ')+"\n"
+	return authors.replace("\n\n", '')
+	
+
+def getAbstract(f1) :
+	global firstline
+	abstract = firstline
+	for line in f1 :
+		if line.startswith("Introduction") or line.startswith("introduction") or line.startswith("INTRODUCTION") or line.startswith("1") or line.startswith("I.") :
+			firstline = line.replace("Introduction", "").replace("introduction", "").replace("INTRODUCTION", "").replace("1", "").replace("I.", "");
+			break
+		else :
+			abstract += "\t"+line.replace('\n', ' ')+"\n"
+	return abstract
+	
+	
+	
+	
+def getIntro(f1) :
+	global firstline
+	intro = firstline
+	
+	for line in f1 :
+		if line.startswith("2\t") or line.startswith("II\t") or line.startswith("II.") or line.startswith("2  ") or line.startswith("2.") or line.startswith("2 "):
+			firstline = line.replace("2\t", "").replace("II\t", "").replace("II.", "")
+			break
+		else :
+			intro += "\t"+line.replace('\n', ' ')+"\n"
+			
+	return intro
+
+#Corps : 2, II
+
+#Results = conclusion
+
+def getCorps(f1) :
+	global firstline
+	corps = firstline
+		
+	for line in f1 :
+		if re.match("[0-9]* Conclusion", line)  or re.match("[0-9]* CONCLUSION", line) or re.match("[0-9]* Result", line) or re.match("[0-9]* RESULT", line) or re.match("(I|X|V)*. Conclusion", line)  or re.match("(I|X|V)*. CONCLUSION", line) or re.match("(I|X|V)*. Result", line) or re.match("(I|X|V)*. RESULT", line) or re.match("[0-9]*. Conclusion", line)  or re.match("[0-9]*. CONCLUSION", line) or re.match("[0-9]*. Result", line) or re.match("[0-9]*. RESULT", line):
+			firstline = line.replace("Conclusion", "").replace("conclusion", "").replace("CONCLUSION", "").replace("Result", "").replace("result", "").replace("RESULT", "")
+			break
+		else :
+			corps += "\t"+line.replace('\n', ' ')+"\n"
+
+	return corps
+	
+	
+def getConclusion(f1) :
+	global firstline
+	concl = firstline
+	
+	for line in f1 :
+		if re.match("[0-9| ]*Discussion", line)  or re.match("[0-9| ]*DISCUSSION", line) or re.match("[0-9| ]*Acknowledgement", line) or re.match("[0-9| ]*ACKNOWLEDGEMENT", line) or re.match("(I|X|V)*. Discussion", line)  or re.match("(I|X|V)*. DISCUSSION", line) or re.match("(I|X|V)*. Acknowledgement", line) or re.match("(I|X|V)*. ACKNOWLEDGEMENT", line) or re.match("[0-9]*. Discussion", line)  or re.match("[0-9]*. DISCUSSION", line) or re.match("[0-9]*. Acknowledgement", line) or re.match("[0-9]*. ACKNOWLEDGEMENT", line):
+			firstline = line.replace("Discussion", "").replace("discussion", "").replace("DISCUSSION", "").replace("Acknowledgement", "").replace("acknowledgement", "").replace("ACKNOWLEDGEMENT", "")
+			print(line)
+			break
+		else :
+			concl += "\t"+line.replace('\n', ' ')+"\n"
+			
+	return concl
+	
+	
+def getDiscussion(f1) :
+	global firstline
+	disc = firstline
+			
+	for line in f1 :
+		if line.startswith("Bibliography \n") or line.startswith("BIBLIOGRAPHY \n") or line.startswith("References \n") or line.startswith("REFERENCES \n"):
+			firstline = line.replace("Bibliography", "").replace("BIBLIOGRAPHY", "").replace("References", "").replace("REFERENCES", "")
+			break
+		else :
+			disc += "\t"+line.replace('\n', ' ')+"\n"
+			
+	return disc
+	
+	
+def getBibliography(f1) :
+	global firstline
+	bib = firstline
+	for line in f1 :
+		bib += "\t"+line.replace('\n', ' ')+"\n"
+	return bib
+
 
 def parserXML():
 	init()
 	ListeDeFichierPdf=getName()
+	i = 0
 	for x in ListeDeFichierPdf:
+		print(i)
 		article = etree.Element("article")
 		preamble = etree.SubElement(article, "preamble")
 		titre = etree.SubElement(article, "titre")
@@ -67,72 +192,32 @@ def parserXML():
 		command = 'pdf2txt ' + file_to_open + ' > ' + file_to_read
 		os.system(command)
 		open_read = open(temp, 'r+')
+		mpa = dict.fromkeys(range(32))
 		#Preamble
-		preamble.text = x
+		preamble.text = x.translate(mpa)
 		parsed_file = 'ParsedPapers/' + x + '.xml'
 		#Title
-		title = getTitle(open_read)
-		content = open_read.read()
+		title = getTitle(open_read).translate(mpa)
 		titre.text = title
 		#Auteur
-
+		author = getAuthor(open_read).translate(mpa)
+		auteur.text = title
 		#Abstract
-		a = getAbstract(content)
+		a = getAbstract(open_read).translate(mpa)
 		abstract.text = a
 		#Discussion
-		d = getDiscussion(content)
+		d = getDiscussion(open_read).translate(mpa)
 		discussion.text = d
 		#Biblio
-
+		b = getBibliography(open_read)
 		#Arbre
 		tree = etree.ElementTree(article)
 		#Close
 		tree.write(parsed_file)
 		open_read.close()
+		i+=1
 	      
-def getTitle(f1) :
-    first_lines = f1.readline()
-    return(first_lines)
-    
-def getAuteur(f1):
-	finAuteur = (f1.find("Abstract"))
-	paragrapheAuteur = f1[:finAuteur]
-	return(paragrapheAuteur)
 
-
-def getAbstract(f1):
-	debutAbstract = (f1.find("Abstract"))
-	if debutAbstract == -1:
-		debutAbstract = (f1.find("ABSTRACT"))
-	finAbstract = (f1.find("Introduction", debutAbstract))
-	if finAbstract == -1:
-		finAbstract = (f1.find("INTRODUCTION", debutAbstract))
-	substringabstract = f1[debutAbstract:finAbstract]
-	return(substringabstract)
-
-	
-def getBiblio(f1):
-	debutBiblio = (f1.find("References"))
-	if debutBiblio == -1:
-		debutBiblio = (f1.find("REFERENCES"))
-	finBiblio = (f1.find("FF", debutBiblio))
-	substringbiblio = f1[debutBiblio:finBiblio]
-	#substringbiblio = substringbiblio.replace("\x", " ")
-	#substringbiblio = substringbiblio.replace("\n", " ")
-	#substringbiblio = substringbiblio.replace("-\n", " ")
-	#substringbiblio = substringbiblio.replace("-\n", " ")
-	#print(substringbiblio)
-	return(substringbiblio)
-
-def getDiscussion(f1):
-	debutDiscussion = (f1.find("Discussion"))
-	if debutDiscussion == -1:
-		debutDiscussion = (f1.find("DISCUSSION"))
-	finDiscussion = (f1.find("CONCLUSION", debutDiscussion))
-	if finDiscussion == -1:
-		finDiscussion= (f1.find("Conclusion", debutDiscussion))
-	substringdiscussion = f1[debutDiscussion:finDiscussion]
-	return(substringdiscussion)
 
 def getName():
 	ListeDeFichierPdf=[] 
