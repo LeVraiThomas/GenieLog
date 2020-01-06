@@ -128,7 +128,8 @@ def parserXMLsolo(f1) :
 	d = getDiscussion(open_read).translate(mpa)
 	discussion.text = d
 	#Biblio
-	b = getBibliography(open_read)
+	b = getBibliography(open_read).translate(mpa)
+	biblio.text = b
 	#Arbre
 	tree = etree.ElementTree(article)
 	#Close
