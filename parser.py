@@ -29,19 +29,19 @@ def displayMenu(file_format) :
 			j = i+1
 			print(j, "-" + x)
 			i+=1
-		choice = input("Veuillez insérer ci-dessous les numéros attribués aux fichiers souhaités :")
-		#pattern = re.compile("^([0-9][0-9]+)+$")
-		#pattern.match(choice)
-		i = 1
-		for z in ListeDeFichierPdf :
-			if(int(i) == int(choice)) :
-				ListeToConvert.append(z)
-			i+=1
-		for y in ListeToConvert :
-			if(file_format == ".txt") :
-				parserTXTsolo(y)
-			else :
-				parserXMLsolo(y)
+		choice = input("Veuillez insérer ci-dessous les numéros attribués aux fichiers souhaités, un par ligne :")
+		while(choice != "stop") :
+			i = 1
+			for z in ListeDeFichierPdf :
+				if(int(i) == int(choice)) :
+					ListeToConvert.append(z)
+				i+=1
+			for y in ListeToConvert :
+				if(file_format == ".txt") :
+					parserTXTsolo(y)
+				else :
+					parserXMLsolo(y)
+			choice = input("Veuillez insérer ci-dessous les numéros attribués aux fichiers souhaités :")
 	elif(all_some == "O" or all_some == "Oui" or all_some == "o" or all_some == "oui") :
 		if file_format == ".txt" : parserTXT()
 		else : parserXML()	
