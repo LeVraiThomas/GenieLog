@@ -68,8 +68,9 @@ def parserTXTsolo(f1):
 	authors = getAuthor(open_read)
 	open_write.write(" \nAuteurs : \n"+authors)
 	#Abstract
-	abstract = getAbstract(open_read)
-	open_write.write("\nAbstract/Resume de l'article : \n"+abstract.replace('\n', ' ')[0 : 150]+"...\n") 
+	if(ifAbstract(open_read)):
+		abstract = getAbstract(open_read)
+		open_write.write("\nAbstract/Resume de l'article : \n"+abstract.replace('\n', ' ')[0 : 150]+"...\n") 
 	#Introduction
 	intro = getIntro(open_read)
 	open_write.write("\nIntroduction : \n\t"+intro.replace('\n', ' ')[0 : 150]+"...\n")
@@ -119,8 +120,9 @@ def parserXMLsolo(f1) :
 	author = getAuthor(open_read).translate(mpa)
 	auteur.text = author
 	#Abstract
-	a = getAbstract(open_read).translate(mpa)
-	abstract.text = a
+	if(ifAbstract(open_read)):
+		a = getAbstract(open_read).translate(mpa)
+		abstract.text = a
 	#Corps
 	c = getCorps(open_read).translate(mpa)
 	corps.text = c
@@ -144,49 +146,57 @@ def parserTXT():
 	firstline = ""
 	i=1
 	for x in ListeDeFichierPdf:
-	    x = x.strip('.pdf')
-	    file_to_open = 'Papers/' + x + '.pdf'
-	    file_to_open = file_to_open.replace(' ', '\ ')
-	    file_to_read = 'ConvertedPapers/' + x + '.txt'
-	    temp = file_to_read
-	    file_to_read = file_to_read.replace(' ', '\ ')
-	    command = 'pdf2txt ' + file_to_open + ' > ' + file_to_read
-	    os.system(command)
-	    open_read = open(temp, 'r+')
+		x = x.strip('.pdf')
+		file_to_open = 'Papers/' + x + '.pdf'
+		file_to_open = file_to_open.replace(' ', '\ ')
+		file_to_read = 'ConvertedPapers/' + x + '.txt'
+		temp = file_to_read
+		file_to_read = file_to_read.replace(' ', '\ ')
+		command = 'pdf2txt ' + file_to_open + ' > ' + file_to_read
+		os.system(command)
+		open_read = open(temp, 'r+')
 	    #Name
-	    parsed_file = 'ParsedPapers/' + x + '.txt'
-	    open_write = open(parsed_file, 'w+')
-	    open_write.write("Nom du fichier : \n \t"+x+"\n")
+		parsed_file = 'ParsedPapers/' + x + '.txt'
+		open_write = open(parsed_file, 'w+')
+		open_write.write("Nom du fichier : \n \t"+x+"\n")
 	    #Title
-	    titre = getTitle(open_read)
-	    open_write.write("Titre de l'article : \n "+titre.replace('\n', ' ')+"...")
+		titre = getTitle(open_read)
+		open_write.write("Titre de l'article : \n "+titre.replace('\n', ' ')+"...")
 	    #Auteur
-	    authors = getAuthor(open_read)
-	    open_write.write(" \nAuteurs : \n"+authors)
-	    #Abstract
-	    abstract = getAbstract(open_read)
-	    open_write.write("\nAbstract/Resume de l'article : \n"+abstract.replace('\n', ' ')[0 : 150]+"...\n") 
-	    #Introduction
-	    intro = getIntro(open_read)
-	    open_write.write("\nIntroduction : \n\t"+intro.replace('\n', ' ')[0 : 150]+"...\n")
-	    #Corps
-	    corps = getCorps(open_read)
-	    open_write.write("\nCorps : \n\t"+corps.replace('\n', ' ')[0 : 300]+"...\n")
-	    #Conclusion
-	    conclusion = getConclusion(open_read)
-	    open_write.write("\nConclusion : \n\t"+conclusion.replace('\n', ' ')[0 : 150]+"...\n")
-	    #Discussion
-	    discussion = getDiscussion(open_read)
-	    open_write.write("\nDiscussion : \n\t"+discussion.replace('\n', ' ')[0 : 150]+"...\n")
-	    #Bibliography
-	    bibliography = getBibliography(open_read)
-	    open_write.write("\nBibliographie : \n\t"+bibliography.replace('\n', ' ')+"\n")
-	    print(i, " fichier(s) converti(s)")
-	    i=i+1
+		authors = getAuthor(open_read)
+		open_write.write(" \nAuteurs : \n"+authors)
+		#Abstract
+		abstract = getAbstract(open_read)
+		open_write.write("\nAbstract/Resume de l'article : \n"+abstract.replace('\n', ' ')[0 : 150]+"...\n") 
+		#Introduction
+		intro = getIntro(open_read)
+		open_write.write("\nIntroduction : \n\t"+intro.replace('\n', ' ')[0 : 150]+"...\n")
+		#Corps
+		corps = getCorps(open_read)
+		open_write.write("\nCorps : \n\t"+corps.replace('\n', ' ')[0 : 300]+"...\n")
+		#Conclusion
+		conclusion = getConclusion(open_read)
+		open_write.write("\nConclusion : \n\t"+conclusion.replace('\n', ' ')[0 : 150]+"...\n")
+		#Discussion
+		discussion = getDiscussion(open_read)
+		open_write.write("\nDiscussion : \n\t"+discussion.replace('\n', ' ')[0 : 150]+"...\n")
+		#Bibliography
+		bibliography = getBibliography(open_read)
+		open_write.write("\nBibliographie : \n\t"+bibliography.replace('\n', ' ')+"\n")
+		print(i, " fichier(s) converti(s)")
+		i=i+1
 	    
-	    open_read.close()
-	    open_write.close()
+		open_read.close()
+		open_write.close()
 
+
+def ifAbstract(f1) :
+	f2 = f1
+	for line in f2 :
+		if line.startswith("Abstract") or line.startswith("abstract") or line.startswith("ABSTRACT") :
+			return True
+		else :
+			return False
 
 def getTitle(f1) :
     first_lines = f1.readline()
@@ -320,8 +330,9 @@ def parserXML():
 		author = getAuthor(open_read).translate(mpa)
 		auteur.text = author
 		#Abstract
-		a = getAbstract(open_read).translate(mpa)
-		abstract.text = a
+		if(ifAbstract(open_read)):
+			a = getAbstract(open_read).translate(mpa)
+			abstract.text = a
 		#Corps
 		c = getCorps(open_read).translate(mpa)
 		corps.text = c
