@@ -5,7 +5,6 @@ import re
 from os.path import basename, splitext
 import sys
 from lxml import etree
-from unicodedata import *
 
 #Used when a part ending is the begining of another one
 firstline = ""
@@ -16,7 +15,126 @@ def init():
 	os.system('mkdir ConvertedPapers')
 	os.system('rm -r ParsedPapers')
 	os.system('mkdir ParsedPapers')
+
+def displayMenu(file_format) :
+	print("Vous avez choisi le format "+file_format) 
+	print("Souhaitez-vous convertir tous les fichiers disponibles ? O/N")
+	all_some = input()
+	if(all_some == "N" or all_some == "n" or all_some == "Non" or all_some == "non") :
+		print("Voici les fichiers disponibles : ")
+		ListeToConvert = []
+		ListeDeFichierPdf=getName() 
+		i=0
+		for x in ListeDeFichierPdf :
+			j = i+1
+			print(j, "-" + x)
+			i+=1
+		choice = input("Veuillez insérer ci-dessous les numéros attribués aux fichiers souhaités :")
+		#pattern = re.compile("^([0-9][0-9]+)+$")
+		#pattern.match(choice)
+		i = 1
+		for z in ListeDeFichierPdf :
+			if(int(i) == int(choice)) :
+				ListeToConvert.append(z)
+			i+=1
+		for y in ListeToConvert :
+			if(file_format == ".txt") :
+				parserTXTsolo(y)
+			else :
+				parserXMLsolo(y)
+	elif(all_some == "O" or all_some == "Oui" or all_some == "o" or all_some == "oui") :
+		if file_format == ".txt" : parserTXT()
+		else : parserXML()	
 	
+def parserTXTsolo(f1):
+	f1 = f1.strip('.pdf')
+	file_to_open = 'Papers/' + f1 + '.pdf'
+	file_to_open = file_to_open.replace(' ', '\ ')
+	file_to_read = 'ConvertedPapers/' + f1 + '.txt'
+	temp = file_to_read
+	file_to_read = file_to_read.replace(' ', '\ ')
+	command = 'pdf2txt ' + file_to_open + ' > ' + file_to_read
+	os.system(command)
+	open_read = open(temp, 'r+')
+	#Name
+	parsed_file = 'ParsedPapers/' + f1 + '.txt'
+	open_write = open(parsed_file, 'w+')
+	open_write.write("Nom du fichier : \n \t"+f1+"\n")
+	print(f1)
+	#Title
+	titre = getTitle(open_read)
+	open_write.write("Titre de l'article : \n "+titre.replace('\n', ' ')+"...")
+	#Auteur
+	authors = getAuthor(open_read)
+	open_write.write(" \nAuteurs : \n"+authors)
+	#Abstract
+	abstract = getAbstract(open_read)
+	open_write.write("\nAbstract/Resume de l'article : \n"+abstract.replace('\n', ' ')[0 : 150]+"...\n") 
+	#Introduction
+	intro = getIntro(open_read)
+	open_write.write("\nIntroduction : \n\t"+intro.replace('\n', ' ')[0 : 150]+"...\n")
+	#Corps
+	corps = getCorps(open_read)
+	open_write.write("\nCorps : \n\t"+corps.replace('\n', ' ')[0 : 300]+"...\n")
+	#Conclusion
+	conclusion = getConclusion(open_read)
+	open_write.write("\nConclusion : \n\t"+conclusion.replace('\n', ' ')[0 : 150]+"...\n")
+	#Discussion
+	discussion = getDiscussion(open_read)
+	open_write.write("\nDiscussion : \n\t"+discussion.replace('\n', ' ')[0 : 150]+"...\n")
+	#Bibliography
+	bibliography = getBibliography(open_read)
+	open_write.write("\nBibliographie : \n\t"+bibliography.replace('\n', ' ')+"\n")
+	
+	open_read.close()
+	open_write.close()
+	
+	
+def parserXMLsolo(f1) :
+	article = etree.Element("article")
+	preamble = etree.SubElement(article, "preamble")
+	titre = etree.SubElement(article, "titre")
+	auteur = etree.SubElement(article, "auteur")
+	abstract = etree.SubElement(article, "abstract")
+	corps = etree.SubElement(article, "corps")
+	discussion = etree.SubElement(article, "discussion")
+	biblio = etree.SubElement(article, "biblio")
+	f1 = f1.strip('.pdf')
+	file_to_open = 'Papers/' + f1 + '.pdf'
+	file_to_open = file_to_open.replace(' ', '\ ')
+	file_to_read = 'ConvertedPapers/' + f1 + '.txt'
+	temp = file_to_read
+	file_to_read = file_to_read.replace(' ', '\ ')
+	command = 'pdf2txt ' + file_to_open + ' > ' + file_to_read
+	os.system(command)
+	open_read = open(temp, 'r+')
+	mpa = dict.fromkeys(range(32))
+	#Preamble
+	preamble.text = f1.translate(mpa)
+	parsed_file = 'ParsedPapers/' + f1 + '.xml'
+	#Title
+	title = getTitle(open_read).translate(mpa)
+	titre.text = title
+	#Auteur
+	author = getAuthor(open_read).translate(mpa)
+	auteur.text = author
+	#Abstract
+	a = getAbstract(open_read).translate(mpa)
+	abstract.text = a
+	#Corps
+	c = getCorps(open_read).translate(mpa)
+	corps.text = c
+	#Discussion
+	d = getDiscussion(open_read).translate(mpa)
+	discussion.text = d
+	#Biblio
+	b = getBibliography(open_read)
+	#Arbre
+	tree = etree.ElementTree(article)
+	#Close
+	tree.write(parsed_file)
+	open_read.close()
+		
 	
 def parserTXT():
 	init()
@@ -62,7 +180,6 @@ def parserTXT():
 	    #Bibliography
 	    bibliography = getBibliography(open_read)
 	    open_write.write("\nBibliographie : \n\t"+bibliography.replace('\n', ' ')+"\n")
-	    #test : print(x, titre, authors, abstract)
 	    
 	    open_read.close()
 	    open_write.close()
@@ -115,9 +232,6 @@ def getIntro(f1) :
 			
 	return intro
 
-#Corps : 2, II
-
-#Results = conclusion
 
 def getCorps(f1) :
 	global firstline
@@ -173,14 +287,15 @@ def getBibliography(f1) :
 def parserXML():
 	init()
 	ListeDeFichierPdf=getName()
-	i = 0
+	i = 1
 	for x in ListeDeFichierPdf:
-		print(i)
+		print(i," fichier(s) converti(s)")
 		article = etree.Element("article")
 		preamble = etree.SubElement(article, "preamble")
 		titre = etree.SubElement(article, "titre")
 		auteur = etree.SubElement(article, "auteur")
 		abstract = etree.SubElement(article, "abstract")
+		corps = etree.SubElement(article, "corps")
 		discussion = etree.SubElement(article, "discussion")
 		biblio = etree.SubElement(article, "biblio")
 		x = x.strip('.pdf')
@@ -201,10 +316,13 @@ def parserXML():
 		titre.text = title
 		#Auteur
 		author = getAuthor(open_read).translate(mpa)
-		auteur.text = title
+		auteur.text = author
 		#Abstract
 		a = getAbstract(open_read).translate(mpa)
 		abstract.text = a
+		#Corps
+		c = getCorps(open_read).translate(mpa)
+		corps.text = c
 		#Discussion
 		d = getDiscussion(open_read).translate(mpa)
 		discussion.text = d
@@ -228,9 +346,10 @@ def getName():
 	return(ListeDeFichierPdf)
 
 def main():
+	init()
 	if len(sys.argv) < 2 : print("Veuillez signifier une option pour convertir correctement votre fichier (-t pour .txt et -x pour .xml)")
-	elif sys.argv[1]=="-t" : parserTXT()
-	elif sys.argv[1]=="-x" : parserXML()
+	elif sys.argv[1]=="-t" : displayMenu(".txt")
+	elif sys.argv[1]=="-x" : displayMenu(".xml")
 	else : print("Veuillez signifier une option pour convertir correctement votre fichier (-t pour .txt et -x pour .xml)")
 	
 main()
